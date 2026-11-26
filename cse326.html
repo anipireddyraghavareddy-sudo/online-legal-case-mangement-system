@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegalEase | Case Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="logo">⚖</div>
+            <div>
+                <h2>LegalEase</h2>
+                <small>LEGAL MANAGEMENT</small>
+            </div>
+        </div>
+
+        <p class="menu-label">WORKSPACE</p>
+
+        <nav>
+            <button class="nav-btn active" data-page="dashboard">
+                ▦ Dashboard
+            </button>
+            <button class="nav-btn" data-page="cases">
+                ▤ All Cases
+            </button>
+            <button class="nav-btn" data-page="calendar">
+                ▣ Hearings
+            </button>
+            <button class="nav-btn" data-page="clients">
+                ♙ Clients
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="profile">
+                <div class="avatar">A</div>
+                <div>
+                    <strong>Admin</strong>
+                    <small>Legal Administrator</small>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h2 id="pageTitle">Dashboard Overview</h2>
+                <p>Manage your legal cases efficiently.</p>
+            </div>
+            <button class="primary-btn" id="openModal">
+                + New Case
+            </button>
+        </header>
+
+        <!-- DASHBOARD -->
+        <section id="dashboardPage" class="page">
+
+            <div class="welcome">
+                <div>
+                    <h2>Welcome to LegalEase</h2>
+                    <p>Keep your cases organized and stay on top of hearings.</p>
+                </div>
+                <div class="welcome-icon">⚖</div>
+            </div>
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-icon purple">▤</div>
+                    <p>Total Cases</p>
+                    <h2 id="totalCases">0</h2>
+                    <small>All registered cases</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">◷</div>
+                    <p>Pending Cases</p>
+                    <h2 id="pendingCases">0</h2>
+                    <small>Cases in progress</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">✓</div>
+                    <p>Completed Cases</p>
+                    <h2 id="completedCases">0</h2>
+                    <small>Resolved cases</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">▣</div>
+                    <p>Upcoming Hearings</p>
+                    <h2 id="upcomingCases">0</h2>
+                    <small>Future hearing dates</small>
+                </div>
+
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Recent Cases</h3>
+                        <p>Latest cases added to the system</p>
+                    </div>
+                    <button class="text-btn" data-page="cases">
+                        View All →
+                    </button>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Case ID</th>
+                                <th>Case Title</th>
+                                <th>Client</th>
+                                <th>Lawyer</th>
+                                <th>Hearing</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- CASES -->
+        <section id="casesPage" class="page hidden">
+
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Case Records</h3>
+                        <p>Search, review and manage legal cases.</p>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <input type="text" id="searchInput"
+                        placeholder="Search case, client or lawyer...">
+
+                    <select id="statusFilter">
+                        <option value="All">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Case ID</th>
+                                <th>Case Title</th>
+                                <th>Client</th>
+                                <th>Lawyer</th>
+                                <th>Hearing</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="casesTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- HEARINGS -->
+        <section id="calendarPage" class="page hidden">
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Hearing Schedule</h3>
+                        <p>Upcoming court hearing dates</p>
+                    </div>
+                </div>
+
+                <div id="hearingList" class="hearing-list"></div>
+            </div>
+        </section>
+
+        <!-- CLIENTS -->
+        <section id="clientsPage" class="page hidden">
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Client Directory</h3>
+                        <p>Clients registered with the system</p>
+                    </div>
+                </div>
+
+                <div id="clientList" class="client-list"></div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- ADD CASE MODAL -->
+<div id="caseModal" class="modal hidden">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <div>
+                <h2>Register New Case</h2>
+                <p>Enter case information below.</p>
+            </div>
+            <button id="closeModal" class="close-btn">&times;</button>
+        </div>
+
+        <form id="caseForm">
+
+            <label>Case Title</label>
+            <input type="text" id="caseTitle"
+                placeholder="e.g. Property dispute" required>
+
+            <label>Client Name</label>
+            <input type="text" id="clientName"
+                placeholder="Enter client name" required>
+
+            <label>Lawyer Name</label>
+            <input type="text" id="lawyerName"
+                placeholder="Enter lawyer name" required>
+
+            <label>Case Type</label>
+            <select id="caseType" required>
+                <option value="">Select case type</option>
+                <option>Civil</option>
+                <option>Criminal</option>
+                <option>Family</option>
+                <option>Corporate</option>
+                <option>Property</option>
+                <option>Consumer</option>
+                <option>Other</option>
+            </select>
+
+            <label>Next Hearing Date</label>
+            <input type="date" id="hearingDate" required>
+
+            <label>Case Status</label>
+            <select id="caseStatus">
+                <option>Pending</option>
+                <option>In Progress</option>
+                <option>Completed</option>
+            </select>
+
+            <label>Description</label>
+            <textarea id="caseDescription"
+                placeholder="Brief case details"></textarea>
+
+            <button type="submit" class="primary-btn full-btn">
+                Save Case
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
